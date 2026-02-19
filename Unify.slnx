@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/1 - UI/">
+    <Project Path="src/Unify.Budgets.UI.Controls/Unify.Budgets.UI.Controls.csproj" Id="491005e4-db7e-46f1-8114-c423ba3ab20a" />
+    <Project Path="src/Unify.Budgets.UI.WinForms/Unify.Budgets.UI.WinForms.csproj" Id="c0bc4ab5-47b4-4ea3-b112-6f79e391b16a" />
+  </Folder>
+  <Folder Name="/2 - Application/">
+    <Project Path="src/Unify.Budgets.Application/Unify.Budgets.Application.csproj" Id="36270888-55f2-4d52-afe7-56ff6227ee76" />
+  </Folder>
+  <Folder Name="/3 - Domain/">
+    <Project Path="src/Unify.Budgets.Domain/Unify.Budgets.Domain.csproj" Id="bcaa6664-f334-44f4-8e71-4fac31c27168" />
+  </Folder>
+  <Folder Name="/4 - Infrastructure/">
+    <Project Path="src/Unify.Budgets.CrossCutting/Unify.Budgets.CrossCutting.csproj" Id="5fd1996b-f03a-4d49-bd86-5aff6c2ac01d" />
+  </Folder>
+  <Folder Name="/5 - Shared/">
+    <Project Path="src/Unify.Budgets.Shared/Unify.Budgets.Shared.csproj" Id="4efc615c-737c-4a19-9e52-cd4e60239dfa" />
+  </Folder>
+</Solution>
