@@ -9,83 +9,50 @@ namespace Unify.Budgets.Domain.Entities
     public class Orcamento : Entity
     {
         public Orcamento() { }
-        public Orcamento(long id, string nome, string documento, string email, string telefone, string rua, string cidade, string bairro, string numero, string estado, string cEP, long situacaoId, long usuarioId, DateTime dt_Criacao, DateTime dt_Prazo, decimal custoTotal, decimal precoTotal, decimal lucroTotal)
+        public Orcamento(long id, long clienteId, string rua, string cidade, string bairro, string numero, string estado, string cep, string complemento, long situacaoId, long usuarioId, DateTime dt_Criacao, DateTime dt_Validade, DateTime dt_PrazoFinalizacao, DateTime dt_PrazoGarantia, decimal valorTotal)
         {
             Id = id;
-            Nome = nome;
-            Documento = documento;
-            Email = email;
-            Telefone = telefone;
+            ClienteId = clienteId;
             Rua = rua;
             Cidade = cidade;
             Bairro = bairro;
             Numero = numero;
             Estado = estado;
-            CEP = cEP;
+            CEP = cep;
+            Complemento = complemento;
             SituacaoId = situacaoId;
             UsuarioId = usuarioId;
             Dt_Criacao = dt_Criacao;
-            Dt_Prazo = dt_Prazo;
-            CustoTotal = custoTotal;
-            PrecoTotal = precoTotal;
-            LucroTotal = lucroTotal;
+            Dt_Validade = dt_Validade;
+            Dt_PrazoFinalizacao = dt_PrazoFinalizacao;
+            Dt_PrazoGarantia = dt_PrazoGarantia;
+            ValorTotal = valorTotal;
         }
 
+
         public long Id { get; set; }
-        public string Nome { get; set; }
-        public string Documento { get; set; }
-        public string Email { get; set; }
-        public string Telefone { get; set; }
+        public long ClienteId { get; set; }
         public string Rua { get; set; }
         public string Cidade { get; set; }
         public string Bairro { get; set; }
         public string Numero { get; set; }
         public string Estado { get; set; }
         public string CEP { get; set; }
+        public string Complemento { get; set; }
         public long SituacaoId { get; set; }
         public long UsuarioId { get; set; }
         public DateTime Dt_Criacao { get; set; }
-        public DateTime Dt_Prazo { get; set; }
-        public decimal CustoTotal { get; set; }
-        public decimal PrecoTotal { get; set; }
-        public decimal LucroTotal { get; set; }
+        public DateTime Dt_Validade { get; set; }
+        public DateTime Dt_PrazoFinalizacao { get; set; }
+        public DateTime Dt_PrazoGarantia { get; set; }
+        public decimal ValorTotal { get; set; }
 
-        public void AlterarNome(string nome)
+        public void AlterarCliente(long id)
         {
-            if (string.IsNullOrWhiteSpace(nome))
-                throw new ValidationException("Nome obrigatório");
+            if (id <= 0)
+                throw new ValidationException("Cliente inválido!");
 
-            this.Nome = nome;
-        }
-
-        public void AlterarDocumento(string documento)
-        {
-            if (!string.IsNullOrWhiteSpace(documento))
-            {
-                if (documento.Length != 11 && documento.Length != 14)
-                    throw new ValidationException("O documento informado não válido!");
-            }
-
-            this.Documento = documento;
-        }
-
-        public void AlterarEmail(string email)
-        {
-            if (!string.IsNullOrWhiteSpace(email))
-            {
-                if (!email.Contains("@"))
-                    throw new ValidationException("O email informado é inválido!");
-            }
-
-            this.Email = email;
-        }
-
-        public void AlterarTelefone(string fone)
-        {
-            if (!Validations.ValidaFone(fone))
-                throw new ValidationException("O telefone informado é inválido!");
-
-            this.Telefone = fone;
+            this.ClienteId = id;
         }
 
         public void AlterarRua(string rua)
@@ -145,27 +112,42 @@ namespace Unify.Budgets.Domain.Entities
             this.Dt_Criacao = dt;
         }
 
-        public void AlterarDtPrazo(DateTime dt)
+        public void AlterarDtValidade(DateTime dt)
         {
-            if(dt == DateTime.MinValue)
-                throw new ValidationException("Prazo inválido!");
+            if (dt == DateTime.MinValue)
+                throw new ValidationException("Validade inválida!");
 
-            this.Dt_Prazo = dt;
+            if(dt <= DateTime.Now)
+                throw new ValidationException("Validade deve ser maior que a data atual!");
+
+            this.Dt_Validade = dt;
         }
 
-        public void AlterarCustoTotal(decimal valor)
+        public void AlterarDtPrazoFinalizacao(DateTime dt)
         {
-            this.CustoTotal = valor;
+            if (dt == DateTime.MinValue)
+                throw new ValidationException("Prazo de finalização inválido!");
+
+            if (dt <= DateTime.Now)
+                throw new ValidationException("Prazo de finalização deve ser maior que a data atual!");
+
+            this.Dt_PrazoFinalizacao = dt;
         }
 
-        public void AlterarPrecoTotal(decimal valor)
+        public void AlterarDtPrazoGarantia(DateTime dt)
         {
-            this.PrecoTotal = valor;
+            if (dt == DateTime.MinValue)
+                throw new ValidationException("Prazo de garantia inválido!");
+
+            if (dt <= DateTime.Now)
+                throw new ValidationException("Prazo de garantia deve ser maior que a data atual!");
+
+            this.Dt_PrazoGarantia = dt;
         }
 
-        public void AlterarLucroTotal(decimal valor)
+        public void AlterarValorTotal(decimal valor)
         {
-            this.LucroTotal = valor;
+            this.ValorTotal = valor;
         }
     }
 }

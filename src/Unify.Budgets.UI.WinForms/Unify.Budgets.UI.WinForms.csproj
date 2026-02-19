@@ -190,7 +190,6 @@
     <Compile Include="Controls\Orcamento.Designer.cs">
       <DependentUpon>Orcamento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Enums\OrcamentosEnum.cs" />
     <Compile Include="Forms\Cadastros\Clientes\frmListaClientes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -353,6 +352,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Enums\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>

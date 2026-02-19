@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
@@ -8,7 +9,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Unify.Budgets.Application.DTOs;
 using Unify.Budgets.Application.Interfaces;
+using Unify.Budgets.Application.Interfaces.Queries;
 using Unify.Budgets.Domain.Entities;
+using Unify.Budgets.Domain.Enums;
 using Unify.Budgets.Domain.Exceptions;
 using Unify.Budgets.Domain.Interfaces;
 
@@ -17,14 +20,16 @@ namespace Unify.Budgets.Application.Services
     public class OrcamentoService : IOrcamentoService
     {
         private readonly IOrcamentoRepository _repo;
+        private readonly IOrcamentoQueries _query;
         private readonly IOrcamentoMaterialRepository _repoMaterial;
         private readonly IOrcamentoServicoRepository _repoServico;
-
+    
         private readonly IUnidadeRepository _unidadeRepo;
         private readonly IUnitOfWork _uow;
-        public OrcamentoService(IOrcamentoRepository repo, IUnidadeRepository unidadeRepo, IOrcamentoMaterialRepository repoMaterial, IOrcamentoServicoRepository repoServico, IUnitOfWork uow)
+        public OrcamentoService(IOrcamentoRepository repo, IOrcamentoQueries query, IUnidadeRepository unidadeRepo, IOrcamentoMaterialRepository repoMaterial, IOrcamentoServicoRepository repoServico, IUnitOfWork uow)
         {
             _repo = repo;
+            _query = query;
             _repoMaterial = repoMaterial;
             _repoServico = repoServico;
             _unidadeRepo = unidadeRepo;
@@ -37,6 +42,31 @@ namespace Unify.Budgets.Application.Services
                 .Select(p => new OrcamentoDTO
                 {
                     Id = p.Id,
+                    ClienteId = p.ClienteId,
+                    Rua = p.Rua,
+                    Cidade = p.Cidade,
+                    Bairro = p.Bairro,
+                    Numero = p.Numero,
+                    Estado = p.Estado,
+                    CEP = p.CEP,
+                    SituacaoId = p.SituacaoId,
+                    UsuarioId = p.UsuarioId,
+                    Dt_Criacao = p.Dt_Criacao,
+                    Dt_PrazoFinalizacao = p.Dt_PrazoFinalizacao,
+                    Dt_PrazoGarantia = p.Dt_PrazoGarantia,
+                    Dt_Validade = p.Dt_Validade,
+                    Complemento = p.Complemento,
+                    ValorTotal = p.ValorTotal
+                }).OrderBy(x => x.Id).ToList();
+        }
+
+        public IEnumerable<OrcamentoDetalhadoDTO> ObterTodosDetalhado()
+        {
+            return _query.ObterTodosDetalhado()
+                .Select(p => new OrcamentoDetalhadoDTO
+                {
+                    Id = p.Id,
+                    ClienteId = p.ClienteId,
                     Nome = p.Nome,
                     Documento = p.Documento,
                     Email = p.Email,
@@ -47,13 +77,15 @@ namespace Unify.Budgets.Application.Services
                     Numero = p.Numero,
                     Estado = p.Estado,
                     CEP = p.CEP,
-                    SituacaoId = (Domain.Enums.OrcamentoSituacao)p.SituacaoId,
+                    SituacaoId = p.SituacaoId,
+                    SituacaoDescricao = p.SituacaoDescricao,
                     UsuarioId = p.UsuarioId,
                     Dt_Criacao = p.Dt_Criacao,
-                    Dt_Prazo = p.Dt_Prazo,
-                    CustoTotal = p.CustoTotal,
-                    PrecoTotal = p.PrecoTotal,
-                    LucroTotal = p.LucroTotal,
+                    Dt_PrazoFinalizacao = p.Dt_PrazoFinalizacao,
+                    Dt_PrazoGarantia = p.Dt_PrazoGarantia,
+                    Dt_Validade = p.Dt_Validade,
+                    Complemento = p.Complemento,
+                    ValorTotal = p.ValorTotal
                 }).OrderBy(x => x.Id).ToList();
         }
 
@@ -81,8 +113,8 @@ namespace Unify.Budgets.Application.Services
                     Id = p.Id,
                     OrcamentoId = p.OrcamentoId,
                     ServicoId = p.ServicoId,
-                    PrecoBase = p.PrecoBase,
-                    TempoMedioMinutos = p.TempoMedioMinutos,
+                    Preco = p.Preco,
+                    Quantidade = p.Quantidade,
                     PrecoTotal = p.PrecoTotal,
                     Observacoes = p.Observacoes
                 }).OrderBy(x => x.Id).ToList();
@@ -92,24 +124,20 @@ namespace Unify.Budgets.Application.Services
         {
             var orcamento = new Orcamento();
 
-            orcamento.AlterarNome(dto.Nome);
-            orcamento.AlterarDocumento(dto.Documento);
-            orcamento.AlterarEmail(dto.Email);
-            orcamento.AlterarTelefone(dto.Telefone);
+            orcamento.AlterarCliente(dto.ClienteId);
             orcamento.AlterarRua(dto.Rua);
             orcamento.AlterarBairro(dto.Bairro);
             orcamento.AlterarNumero(dto.Numero);
             orcamento.AlterarCidade(dto.Cidade);
             orcamento.AlterarEstado(dto.Estado);
             orcamento.AlterarCEP(dto.CEP);
-            orcamento.AlterarSituacao(dto.SituacaoId);
+            orcamento.AlterarSituacao((OrcamentoSituacao)dto.SituacaoId);
             orcamento.AlterarUsuarioCriador(dto.UsuarioId);
             orcamento.AlterarDtCriacao(DateTime.Now);
-            orcamento.AlterarDtPrazo(dto.Dt_Prazo);
-
-            orcamento.AlterarCustoTotal(dto.CustoTotal);
-            orcamento.AlterarPrecoTotal(dto.PrecoTotal);
-            orcamento.AlterarLucroTotal(dto.LucroTotal);
+            orcamento.AlterarDtValidade(dto.Dt_Validade);
+            orcamento.AlterarDtPrazoFinalizacao(dto.Dt_PrazoFinalizacao);
+            orcamento.AlterarDtPrazoGarantia(dto.Dt_PrazoGarantia);
+            orcamento.AlterarValorTotal(dto.ValorTotal);
 
             _repo.Add(orcamento);
             _uow.Commit();
@@ -119,24 +147,20 @@ namespace Unify.Budgets.Application.Services
         {
             var orcamento = new Orcamento();
 
-            orcamento.AlterarNome(dto.Nome);
-            orcamento.AlterarDocumento(dto.Documento);
-            orcamento.AlterarEmail(dto.Email);
-            orcamento.AlterarTelefone(dto.Telefone);
+            orcamento.AlterarCliente(dto.ClienteId);
             orcamento.AlterarRua(dto.Rua);
             orcamento.AlterarBairro(dto.Bairro);
             orcamento.AlterarNumero(dto.Numero);
             orcamento.AlterarCidade(dto.Cidade);
             orcamento.AlterarEstado(dto.Estado);
             orcamento.AlterarCEP(dto.CEP);
-            orcamento.AlterarSituacao(dto.SituacaoId);
+            orcamento.AlterarSituacao((OrcamentoSituacao)dto.SituacaoId);
             orcamento.AlterarUsuarioCriador(dto.UsuarioId);
             orcamento.AlterarDtCriacao(DateTime.Now);
-            orcamento.AlterarDtPrazo(dto.Dt_Prazo);
-
-            orcamento.AlterarCustoTotal(dto.CustoTotal);
-            orcamento.AlterarPrecoTotal(dto.PrecoTotal);
-            orcamento.AlterarLucroTotal(dto.LucroTotal);
+            orcamento.AlterarDtValidade(dto.Dt_Validade);
+            orcamento.AlterarDtPrazoFinalizacao(dto.Dt_PrazoFinalizacao);
+            orcamento.AlterarDtPrazoGarantia(dto.Dt_PrazoGarantia);
+            orcamento.AlterarValorTotal(dto.ValorTotal);
 
             _repo.Add(orcamento);
             _uow.Commit();
@@ -162,23 +186,26 @@ namespace Unify.Budgets.Application.Services
         public void Atualizar(OrcamentoDTO dto)
         {
             var orcamento = _repo.Get(dto.Id);
-            orcamento.AlterarNome(dto.Nome);
-            orcamento.AlterarDocumento(dto.Documento);
-            orcamento.AlterarEmail(dto.Email);
-            orcamento.AlterarTelefone(dto.Telefone);
+
+            if (orcamento.SituacaoId != (long)Domain.Enums.OrcamentoSituacao.EmOrcamento)
+            {
+                throw new ValidationException($"Não é possível excluir um orçamento reisado!");
+            }
+
+            orcamento.AlterarCliente(dto.ClienteId);
             orcamento.AlterarRua(dto.Rua);
             orcamento.AlterarBairro(dto.Bairro);
             orcamento.AlterarNumero(dto.Numero);
             orcamento.AlterarCidade(dto.Cidade);
             orcamento.AlterarEstado(dto.Estado);
             orcamento.AlterarCEP(dto.CEP);
-            orcamento.AlterarSituacao(dto.SituacaoId);
+            orcamento.AlterarSituacao((OrcamentoSituacao)dto.SituacaoId);
             orcamento.AlterarUsuarioCriador(dto.UsuarioId);
             orcamento.AlterarDtCriacao(DateTime.Now);
-            orcamento.AlterarDtPrazo(dto.Dt_Prazo);
-            orcamento.AlterarCustoTotal(dto.CustoTotal);
-            orcamento.AlterarPrecoTotal(dto.PrecoTotal);
-            orcamento.AlterarLucroTotal(dto.LucroTotal);
+            orcamento.AlterarDtValidade(dto.Dt_Validade);
+            orcamento.AlterarDtPrazoFinalizacao(dto.Dt_PrazoFinalizacao);
+            orcamento.AlterarDtPrazoGarantia(dto.Dt_PrazoGarantia);
+            orcamento.AlterarValorTotal(dto.ValorTotal);
 
             _uow.Commit();
         }
@@ -186,10 +213,10 @@ namespace Unify.Budgets.Application.Services
         {
             var orcamento = _repo.Get(id);
 
-            // TODO
-            //if (OrcamentoPossuiMovimento(id))
-            //    throw new AppException(
-            //        "Orcamento com movimentação");
+            if (orcamento.SituacaoId != (long)Domain.Enums.OrcamentoSituacao.EmOrcamento)
+            {
+                throw new ValidationException($"Não é possível excluir um orçamento reisado!");
+            }
 
             _repo.Remove(orcamento);
             _uow.Commit();
@@ -203,9 +230,11 @@ namespace Unify.Budgets.Application.Services
             };
 
             material.AlterarProduto(dto.ProdutoId);
-            material.AlterarQuantidade(dto.Quantidade);
+            material.AlterarComprimento(dto.Comprimento);
+            material.AlterarLargura(dto.Largura);
             material.AlterarPrecoUnidade(dto.PrecoUnidade);
-            material.AlterarPrecoTotal(dto.PrecoTotal);
+            material.AlterarQuantidade(dto.Quantidade);
+            material.AlterarObservacoes(dto.Observacoes);
 
             _repoMaterial.Add(material);
             _uow.Commit();
@@ -218,9 +247,11 @@ namespace Unify.Budgets.Application.Services
             var material = _repoMaterial.Get(dto.Id);
 
             material.AlterarProduto(dto.ProdutoId);
-            material.AlterarQuantidade(dto.Quantidade);
+            material.AlterarComprimento(dto.Comprimento);
+            material.AlterarLargura(dto.Largura);
             material.AlterarPrecoUnidade(dto.PrecoUnidade);
-            material.AlterarPrecoTotal(dto.PrecoTotal);
+            material.AlterarQuantidade(dto.Quantidade);
+            material.AlterarObservacoes(dto.Observacoes);
 
             _uow.Commit();
 
@@ -233,6 +264,8 @@ namespace Unify.Budgets.Application.Services
 
             _repoMaterial.Remove(material);
             _uow.Commit();
+
+            AtualizaTotais(material.OrcamentoId);
         }
 
         public void AdicionarServico(OrcamentoServicoDTO dto)
@@ -243,9 +276,8 @@ namespace Unify.Budgets.Application.Services
             };
 
             servico.AlterarServico(dto.ServicoId);
-            servico.AlterarPrecoBase(dto.PrecoBase);
-            servico.AlterarPrecoTotal(dto.PrecoTotal);
-            servico.AlterarTempoMedio(dto.TempoMedioMinutos);
+            servico.AlterarPreco(dto.Preco);
+            servico.AlterarQuantidade(dto.Quantidade);
             servico.AlterarObservacoes(dto.Observacoes);
 
             _repoServico.Add(servico);
@@ -259,9 +291,8 @@ namespace Unify.Budgets.Application.Services
             var servico = _repoServico.Get(dto.Id);
 
             servico.AlterarServico(dto.ServicoId);
-            servico.AlterarPrecoBase(dto.PrecoBase);
-            servico.AlterarPrecoTotal(dto.PrecoTotal);
-            servico.AlterarTempoMedio(dto.TempoMedioMinutos);
+            servico.AlterarPreco(dto.Preco);
+            servico.AlterarQuantidade(dto.Quantidade);
             servico.AlterarObservacoes(dto.Observacoes);
 
             _uow.Commit();
@@ -275,6 +306,8 @@ namespace Unify.Budgets.Application.Services
 
             _repoServico.Remove(servico);
             _uow.Commit();
+
+            AtualizaTotais(servico.OrcamentoId);
         }
 
 
@@ -295,7 +328,7 @@ namespace Unify.Budgets.Application.Services
                                               .Where(x => x.OrcamentoId == id)
                                               .Sum(x => x.PrecoTotal);
 
-            orcamento.AlterarPrecoTotal(totalMateriais + totalServicos);
+            orcamento.AlterarValorTotal(totalMateriais + totalServicos);
         }
     }
 }

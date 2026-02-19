@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Unify.Budgets.Shared.Validations
 {
@@ -42,7 +38,7 @@ namespace Unify.Budgets.Shared.Validations
                 if (numeros[2] != '9')
                     return false;
             }
-            else // Fixo
+            else
             {
                 // Terceiro dígito entre 2 e 5
                 var terceiroDigito = numeros[2];
@@ -55,7 +51,6 @@ namespace Unify.Budgets.Shared.Validations
 
         private static bool IsDddValido(int ddd)
         {
-            // DDDs válidos no Brasil (lista técnica)
             int[] dddsValidos =
             {
                 11,12,13,14,15,16,17,18,19,
@@ -105,7 +100,7 @@ namespace Unify.Budgets.Shared.Validations
             if (numeros.Length != 8)
                 return false;
 
-            // Rejeita CEPs com todos os dígitos iguais (ex: 00000000)
+            // Rejeita CEPs com todos os dígitos iguais
             if (numeros.All(c => c == numeros[0]))
                 return false;
 

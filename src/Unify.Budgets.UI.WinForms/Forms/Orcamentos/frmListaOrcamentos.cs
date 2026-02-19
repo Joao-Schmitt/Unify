@@ -12,14 +12,12 @@ using Unify.Budgets.UI.Controls.Classes;
 using Unify.Budgets.UI.Controls.Enums;
 using Unify.Budgets.UI.Controls.Extensions;
 using Unify.Budgets.UI.Theme;
-using Unify.Budgets.UI.WinForms.Classes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Orcamentos
 {
     public partial class frmListaOrcamentos : UnifyForm
     {
-        public OrcamentoDTO OrcamentoSelecionado { get; set; }
+        public OrcamentoDetalhadoDTO OrcamentoSelecionado { get; set; }
 
         private IOrcamentoService _orcamentoService;
         private ILogger _logger;
@@ -42,7 +40,7 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Orcamentos
         {
             try
             {
-                gridOrcamentos.DataSource = _orcamentoService.ObterTodos();
+                gridOrcamentos.DataSource = _orcamentoService.ObterTodosDetalhado();
             }
             catch (ApplicationException ex)
             {
@@ -61,10 +59,16 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Orcamentos
 
             var visibleIndex = 0;
 
-            gridOrcamentos.ConfigurarColuna("Nome", "Orcamento", ++visibleIndex);
-            gridOrcamentos.ConfigurarColuna("Unidade", "Unidade", ++visibleIndex, 90);
-            gridOrcamentos.ConfigurarColuna("PrecoUnidade", "Preço", ++visibleIndex);
-            gridOrcamentos.ConfigurarColuna("Ativo", "Status", ++visibleIndex, 80);
+            gridOrcamentos.EnableSingleCheckSelection();
+
+            gridOrcamentos.ConfigurarColuna("Nome", "Cliente", ++visibleIndex);
+            gridOrcamentos.ConfigurarColuna("Documento", "CPF/CNPJ", ++visibleIndex);
+            gridOrcamentos.ConfigurarColuna("Email", "Email", ++visibleIndex);
+            gridOrcamentos.ConfigurarColuna("Telefone", "Fone", ++visibleIndex);
+            gridOrcamentos.ConfigurarColuna("Dt_Criacao", "Dt.Criação", ++visibleIndex, 90);
+            gridOrcamentos.ConfigurarColuna("Dt_PrazoFinalizacao", "Dt.Finalização", ++visibleIndex);
+            gridOrcamentos.ConfigurarColuna("ValorTotal", "Vlr.Total", ++visibleIndex, 80);
+            gridOrcamentos.ConfigurarColuna("SituacaoDescricao", "Situação", ++visibleIndex, 80);
 
             gridOrcamentos.ConfigurarContextMenu(options: Grid.MenuOptions.Todos);
 
@@ -137,7 +141,7 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Orcamentos
 
         private void unifyFrame1_ConfirmarButtonClick(object sender, EventArgs e)
         {
-            var row = gridOrcamentos.GetCheckedRow<OrcamentoDTO>();
+            var row = gridOrcamentos.GetCheckedRow<OrcamentoDetalhadoDTO>();
 
             if (row == null)
                 return;

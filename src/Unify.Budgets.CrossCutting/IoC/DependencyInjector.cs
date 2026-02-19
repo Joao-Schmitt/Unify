@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Unify.Budgets.Application.Interfaces;
+using Unify.Budgets.Application.Interfaces.Queries;
+using Unify.Budgets.Application.Queries;
+using Unify.Budgets.Application.Queries.Abstract;
 using Unify.Budgets.Application.Services;
 using Unify.Budgets.CrossCutting.Email;
 using Unify.Budgets.CrossCutting.Logging;
@@ -26,6 +29,9 @@ namespace Unify.Budgets.Infrastructure.IoC
             services.AddScoped<IOrcamentoRepository, OrcamentoRepository>();
             services.AddScoped<IOrcamentoMaterialRepository, OrcamentoMaterialRepository>();
             services.AddScoped<IOrcamentoServicoRepository, OrcamentoServicoRepository>();
+
+            // Queries
+            services.AddScoped<IOrcamentoQueries, OrcamentoQueries>();
 
             // Services
             services.AddScoped<ISecurityService, SecurityService>();

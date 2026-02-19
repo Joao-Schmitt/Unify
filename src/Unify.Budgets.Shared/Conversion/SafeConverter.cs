@@ -123,7 +123,6 @@
                     if (bool.TryParse(s, out bool result))
                         return result;
 
-                    // Tratamento comum para bases de dados
                     if (s == "1" || s.Equals("S", StringComparison.OrdinalIgnoreCase) ||
                         s.Equals("Y", StringComparison.OrdinalIgnoreCase))
                         return true;
@@ -144,19 +143,35 @@
                 if (value == null || value == DBNull.Value)
                     return DateTime.MinValue;
 
-                try
-                {
-                    if (value is DateTime dt) return dt;
+                if (value is DateTime dt)
+                    return dt;
 
-                    if (DateTime.TryParse(value.ToString(), _culture, DateTimeStyles.None, out DateTime result))
-                        return result;
+                var str = value.ToString();
 
-                    return Convert.ToDateTime(value, _culture);
-                }
-                catch
-                {
+                if (string.IsNullOrWhiteSpace(str))
                     return DateTime.MinValue;
+
+                var formats = new[]
+                {
+                    "dd/MM/yyyy",
+                    "dd/MM/yyyy HH:mm:ss",
+                    "dd/MM/yyyy HH:mm","yyyy-MM-dd"
+                };
+
+                if (DateTime.TryParseExact(
+                        str,
+                        formats,
+                        _culture,
+                        DateTimeStyles.None,
+                        out var result))
+                {
+                    return result;
                 }
+
+                if (DateTime.TryParse(str, _culture, DateTimeStyles.None, out result))
+                    return result;
+
+                return DateTime.MinValue;
             }
 
             public static string ToString(object value)

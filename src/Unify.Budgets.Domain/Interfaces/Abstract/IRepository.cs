@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Unify.Budgets.Domain.Abstractions;
 
 namespace Unify.Budgets.Domain.Interfaces

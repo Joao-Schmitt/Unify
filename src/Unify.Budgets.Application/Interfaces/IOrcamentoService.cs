@@ -10,6 +10,7 @@ namespace Unify.Budgets.Application.Interfaces
     public interface IOrcamentoService
     {
         IEnumerable<OrcamentoDTO> ObterTodos();
+        IEnumerable<OrcamentoDetalhadoDTO> ObterTodosDetalhado();
         IEnumerable<OrcamentoMaterialDTO> ObterMateriais(long orcamentoId);
         IEnumerable<OrcamentoServicoDTO> ObterServicos(long orcamentoId);
         void Criar(OrcamentoDTO dto);

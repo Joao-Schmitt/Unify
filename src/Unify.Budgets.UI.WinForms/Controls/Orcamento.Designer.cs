@@ -86,7 +86,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnVisualizar = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
             this.unifyButton3 = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
-            this.unifyButton2 = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
+            this.btnNovo = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
             this.btnImprimir = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
             this.btnExcluir = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
             this.btnSalvar = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
@@ -386,9 +386,9 @@
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.label4.Location = new System.Drawing.Point(11, 10);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(163, 21);
+            this.label4.Size = new System.Drawing.Size(167, 21);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Endereço do Cliente";
+            this.label4.Text = "Endereço da Entrega";
             // 
             // panel6
             // 
@@ -993,18 +993,19 @@
             this.unifyButton3.Theme = Unify.Budgets.UI.Controls.Enums.ButtonTheme.White;
             this.unifyButton3.UseAutomaticForeColor = true;
             // 
-            // unifyButton2
+            // btnNovo
             // 
-            this.unifyButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.unifyButton2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.unifyButton2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.unifyButton2.Location = new System.Drawing.Point(721, 663);
-            this.unifyButton2.Name = "unifyButton2";
-            this.unifyButton2.Size = new System.Drawing.Size(118, 29);
-            this.unifyButton2.TabIndex = 17;
-            this.unifyButton2.Text = "Novo";
-            this.unifyButton2.Theme = Unify.Budgets.UI.Controls.Enums.ButtonTheme.White;
-            this.unifyButton2.UseAutomaticForeColor = true;
+            this.btnNovo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNovo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnNovo.Location = new System.Drawing.Point(721, 663);
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(118, 29);
+            this.btnNovo.TabIndex = 17;
+            this.btnNovo.Text = "Novo";
+            this.btnNovo.Theme = Unify.Budgets.UI.Controls.Enums.ButtonTheme.White;
+            this.btnNovo.UseAutomaticForeColor = true;
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
             // btnImprimir
             // 
@@ -1068,7 +1069,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.btnVisualizar);
             this.Controls.Add(this.unifyButton3);
-            this.Controls.Add(this.unifyButton2);
+            this.Controls.Add(this.btnNovo);
             this.Controls.Add(this.tabInsumos);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.btnImprimir);
@@ -1178,7 +1179,7 @@
         private System.Windows.Forms.DataGridView grdDesconto;
         private UI.Controls.Controls.UnifyTextBox txtFiltroDesconto;
         private System.Windows.Forms.Label label9;
-        private UI.Controls.Controls.UnifyButton unifyButton2;
+        private UI.Controls.Controls.UnifyButton btnNovo;
         private UI.Controls.Controls.UnifyButton unifyButton3;
         private UI.Controls.Controls.UnifyButton btnVisualizar;
     }

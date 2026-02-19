@@ -52,6 +52,8 @@
     <Compile Include="Persistence\Configurations\UsuarioConfig.cs" />
     <Compile Include="Persistence\Context\AppDbContext.cs" />
     <Compile Include="IoC\DependencyInjector.cs" />
+    <Compile Include="Persistence\Queries\Abstract\Query.cs" />
+    <Compile Include="Persistence\Queries\OrcamentoQueries.cs" />
     <Compile Include="Persistence\Repositories\Abstract\Repository.cs" />
     <Compile Include="Persistence\Repositories\ClienteRepository.cs" />
     <Compile Include="Persistence\Repositories\OrcamentoMaterialRepository.cs" />

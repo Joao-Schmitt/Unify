@@ -9,18 +9,18 @@ using Unify.Budgets.Application.Interfaces;
 using Unify.Budgets.Application.Services;
 using Unify.Budgets.CrossCutting.Logging;
 using Unify.Budgets.Domain.Entities;
+using Unify.Budgets.Domain.Enums;
 using Unify.Budgets.Domain.Exceptions;
+using Unify.Budgets.Shared.Conversion.Infra.Conversao;
 using Unify.Budgets.UI.Controls.Classes;
 using Unify.Budgets.UI.Controls.Enums;
 using Unify.Budgets.UI.Controls.Extensions;
 using Unify.Budgets.UI.Controls.Forms;
 using Unify.Budgets.UI.Theme;
 using Unify.Budgets.UI.WinForms.Classes;
-using Unify.Budgets.UI.WinForms.Enums;
 using Unify.Budgets.UI.WinForms.Forms.Cadastros.Clientes;
 using Unify.Budgets.UI.WinForms.Forms.Cadastros.Orcamentos;
 using Unify.Budgets.UI.WinForms.Forms.Cadastros.Produtos;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Unify.Budgets.UI.WinForms.Controls
 {
@@ -29,8 +29,10 @@ namespace Unify.Budgets.UI.WinForms.Controls
         private IOrcamentoService _orcamentoService;
         private ILogger _logger;
 
-        private StatusOrcamento status;
-        private OrcamentoDTO orcamentoSelecionado;
+        private OrcamentoSituacao status;
+        private OrcamentoDetalhadoDTO orcamentoSelecionado;
+
+        private long clienteSeleciodo;
 
         public btnAddPagamento(ILogger logger, IOrcamentoService orcamentoService)
         {
@@ -52,11 +54,11 @@ namespace Unify.Budgets.UI.WinForms.Controls
 
         private void LimparCampos()
         {
-            status = StatusOrcamento.Orcando;
+            status = OrcamentoSituacao.EmOrcamento;
             pnStatus.BackColor = UnifyTheme.Primary;
             lblStatus.Text = "Em Orçamento";
 
-            orcamentoSelecionado = new OrcamentoDTO();
+            orcamentoSelecionado = new OrcamentoDetalhadoDTO();
             txtNome.Text = string.Empty;
             txtNome.Text = string.Empty;
             txtDocum.Text = string.Empty;
@@ -244,25 +246,25 @@ namespace Unify.Budgets.UI.WinForms.Controls
         {
             switch (status)
             {
-                case StatusOrcamento.Orcando:
+                case OrcamentoSituacao.EmOrcamento:
                     pnStatus.BackColor = UnifyTheme.Warning;
                     lblStatus.Text = "Aprovado";
-                    status = StatusOrcamento.EmAndamento;
+                    status = OrcamentoSituacao.EmProducao;
                     break;
-                case StatusOrcamento.EmAndamento:
+                case OrcamentoSituacao.EmProducao:
                     pnStatus.BackColor = UnifyTheme.Success;
                     lblStatus.Text = "Concluído";
-                    status = StatusOrcamento.Concluido;
+                    status = OrcamentoSituacao.Finalizado;
                     break;
-                case StatusOrcamento.Concluido:
+                case OrcamentoSituacao.Finalizado:
                     pnStatus.BackColor = UnifyTheme.Danger;
                     lblStatus.Text = "Cancelado";
-                    status = StatusOrcamento.Cancelado;
+                    status = OrcamentoSituacao.Cancelado;
                     break;
-                case StatusOrcamento.Cancelado:
+                case OrcamentoSituacao.Cancelado:
                     pnStatus.BackColor = UnifyTheme.Primary;
                     lblStatus.Text = "Em Orçamento";
-                    status = StatusOrcamento.Orcando;
+                    status = OrcamentoSituacao.EmOrcamento;
                     break;
             }
         }
@@ -290,6 +292,7 @@ namespace Unify.Budgets.UI.WinForms.Controls
                     txtEstado.Text = frm.ClienteSelecionado.Estado;
                     txtCep.Text = frm.ClienteSelecionado.CEP;
                     txtComplemento.Text = frm.ClienteSelecionado.Complemento;
+                    clienteSeleciodo = frm.ClienteSelecionado.Id;
                 }
             }
         }
@@ -342,7 +345,6 @@ namespace Unify.Budgets.UI.WinForms.Controls
                     orcamentoSelecionado = frm.OrcamentoSelecionado;
                     PopulaCampos(orcamentoSelecionado);
 
-
                     tabInsumos.Enabled = true;
 
                     CarregaGridMateriais();
@@ -361,18 +363,20 @@ namespace Unify.Budgets.UI.WinForms.Controls
             {
                 var dto = new OrcamentoDTO()
                 {
-                    Nome = txtNome.Text,
-                    Documento = txtDocum.Text,
-                    Email = txtEmail.Text,
-                    Telefone = txtFone.Text,
+                    ClienteId = clienteSeleciodo,
+                    Bairro = txtBairro.Text,
                     Rua = txtRua.Text,
                     Cidade = txtCidade.Text,
-                    Bairro = txtBairro.Text,
                     Numero = txtNr.Text,
                     Estado = txtEstado.Text,
                     CEP = txtCep.Text,
+                    Complemento = txtComplemento.Text,
                     UsuarioId = 666, // ajustar para o usuario atual
-                    Dt_Prazo = DateTime.Now // ajustar para o prazo selecionado
+                    Dt_PrazoFinalizacao = SafeConverter.ToDateTime(txtPrazoFinalizacao.Text),
+                    Dt_Criacao = DateTime.Now,
+                    Dt_PrazoGarantia = SafeConverter.ToDateTime(txtPrazoGarantia.Text),
+                    Dt_Validade = SafeConverter.ToDateTime(txtValidade.Text),
+                    SituacaoId = (long)status
 
                     // Add restante
                 };
@@ -408,7 +412,7 @@ namespace Unify.Budgets.UI.WinForms.Controls
             }
         }
 
-        private void PopulaCampos(OrcamentoDTO orcamento)
+        private void PopulaCampos(OrcamentoDetalhadoDTO orcamento)
         {
             txtNome.Text = orcamento.Nome;
             txtDocum.Text = orcamento.Documento;
@@ -420,6 +424,12 @@ namespace Unify.Budgets.UI.WinForms.Controls
             txtNr.Text = orcamento.Numero;
             txtEstado.Text = orcamento.Estado;
             txtCep.Text = orcamento.CEP;
+            txtComplemento.Text = orcamento.Complemento;
+            txtPrazoFinalizacao.Text = orcamento.Dt_PrazoFinalizacao.ToString("dd/MM/yyyy");
+            txtPrazoGarantia.Text = orcamento.Dt_PrazoGarantia.ToString("dd/MM/yyyy");
+            txtVlrTotal.ValorSemMascara = orcamento.ValorTotal;
+            clienteSeleciodo = orcamento.ClienteId;
+            orcamentoSelecionado = orcamento;
         }
 
         private void btnVisualizar_Click(object sender, EventArgs e)
@@ -427,6 +437,6 @@ namespace Unify.Budgets.UI.WinForms.Controls
 
         }
 
-        
+        private void btnNovo_Click(object sender, EventArgs e) => LimparCampos();
     }
 }
