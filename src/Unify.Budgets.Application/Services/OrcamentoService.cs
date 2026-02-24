@@ -63,45 +63,15 @@ namespace Unify.Budgets.Application.Services
         public IEnumerable<OrcamentoDetalhadoDTO> ObterTodosDetalhado()
         {
             return _query.ObterTodosDetalhado()
-                .Select(p => new OrcamentoDetalhadoDTO
-                {
-                    Id = p.Id,
-                    ClienteId = p.ClienteId,
-                    Nome = p.Nome,
-                    Documento = p.Documento,
-                    Email = p.Email,
-                    Telefone = p.Telefone,
-                    Rua = p.Rua,
-                    Cidade = p.Cidade,
-                    Bairro = p.Bairro,
-                    Numero = p.Numero,
-                    Estado = p.Estado,
-                    CEP = p.CEP,
-                    SituacaoId = p.SituacaoId,
-                    SituacaoDescricao = p.SituacaoDescricao,
-                    UsuarioId = p.UsuarioId,
-                    Dt_Criacao = p.Dt_Criacao,
-                    Dt_PrazoFinalizacao = p.Dt_PrazoFinalizacao,
-                    Dt_PrazoGarantia = p.Dt_PrazoGarantia,
-                    Dt_Validade = p.Dt_Validade,
-                    Complemento = p.Complemento,
-                    ValorTotal = p.ValorTotal
-                }).OrderBy(x => x.Id).ToList();
+                        .OrderBy(x => x.Id)
+                        .ToList();
         }
 
-        public IEnumerable<OrcamentoMaterialDTO> ObterMateriais(long orcamentoId)
+        public IEnumerable<OrcamentoMaterialDetalhadoDTO> ObterMateriais(long orcamentoId)
         {
-            return _repoMaterial.Query()
-                .Where(x => x.OrcamentoId == orcamentoId)
-                .Select(p => new OrcamentoMaterialDTO
-                {
-                    Id = p.Id,
-                    OrcamentoId = p.OrcamentoId,
-                    ProdutoId = p.ProdutoId,
-                    PrecoUnidade = p.PrecoUnidade,
-                    Quantidade = p.Quantidade,
-                    PrecoTotal = p.PrecoTotal
-                }).OrderBy(x => x.Id).ToList();
+            return _query.ObtertMateriaisDetalhado(orcamentoId)
+                         .OrderBy(x => x.Id)
+                         .ToList();
         }
 
         public IEnumerable<OrcamentoServicoDTO> ObterServicos(long orcamentoId)

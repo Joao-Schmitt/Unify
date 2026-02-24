@@ -116,10 +116,13 @@ namespace Unify.Budgets.UI.WinForms.Controls
 
             var visibleIndex = 0;
 
-            grdMateriais.ConfigurarColuna("Nome", "Produto", ++visibleIndex);
-            grdMateriais.ConfigurarColuna("Unidade", "Unidade", ++visibleIndex, 90);
-            grdMateriais.ConfigurarColuna("PrecoUnidade", "Preço", ++visibleIndex);
-            grdMateriais.ConfigurarColuna("Ativo", "Status", ++visibleIndex, 80);
+            grdMateriais.ConfigurarColuna("NomeProduto", "Produto", ++visibleIndex);
+            grdMateriais.ConfigurarColuna("Comprimento", "Comprimento", ++visibleIndex);
+            grdMateriais.ConfigurarColuna("Largura", "Largura", ++visibleIndex);
+            grdMateriais.ConfigurarColuna("AreaTotal", "Área Total", ++visibleIndex);
+            grdMateriais.ConfigurarColuna("Quantidade", "Quantidade", ++visibleIndex);
+            grdMateriais.ConfigurarColuna("PrecoTotal", "Preço", ++visibleIndex);
+            grdMateriais.ConfigurarColuna("Observacoes", "Observações", ++visibleIndex);
 
             grdMateriais.ConfigurarContextMenu(options: Grid.MenuOptions.Todos);
 
@@ -151,7 +154,7 @@ namespace Unify.Budgets.UI.WinForms.Controls
         }
         private void Editar(string column)
         {
-            var row = grdMateriais.GetFocusedRow<OrcamentoMaterialDTO>();
+            var row = grdMateriais.GetFocusedRow<OrcamentoMaterialDetalhadoDTO>();
 
             if (row == null)
                 return;

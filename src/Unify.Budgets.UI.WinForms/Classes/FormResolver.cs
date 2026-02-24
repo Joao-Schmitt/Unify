@@ -33,11 +33,11 @@ namespace Unify.Budgets.UI.WinForms.Classes
             services.AddTransient<frmListaUnidades>();
 
             // Produtos
-            services.AddTransient<frmOrcamentoProduto>();
+            services.AddTransient<frmProduto>();
             services.AddTransient<frmListaProdutos>();
 
             // Serviços
-            services.AddTransient<frmOrcamentoServico>();
+            services.AddTransient<frmServico>();
             services.AddTransient<frmListaServicos>();
 
             // Clientes
@@ -48,6 +48,7 @@ namespace Unify.Budgets.UI.WinForms.Classes
 
             #region Orçamentos
             services.AddTransient<frmListaOrcamentos>();
+            services.AddTransient<frmOrcamentoProduto>();
             #endregion
         }
     }

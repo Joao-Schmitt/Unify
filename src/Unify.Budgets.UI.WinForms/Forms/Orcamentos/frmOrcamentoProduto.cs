@@ -15,11 +15,11 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Produtos
     public partial class frmOrcamentoProduto : UnifyForm
     {
         public long OrcametnoId { get; set; }
-        public OrcamentoMaterialDTO Row { get; set; }
+        public OrcamentoMaterialDetalhadoDTO Row { get; set; }
+
         private IOrcamentoService _orcamentoService;
         private IProdutoService _produtoService;
         private ILogger _logger;
-
         private ProdutoDTO _produtoSelecionado;
 
         public frmOrcamentoProduto(ILogger logger, IOrcamentoService orcamentoService, IProdutoService produtoService)
@@ -44,14 +44,18 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Produtos
                     txtUnidade.Text = produto.Unidade;
                     txtUnidadeDescricao.Text = produto.DescricaoUnidade;
                 }
-               
+
                 txtVlrUnidade.Text = Row.PrecoUnidade.ToString("N2");
-                txtQuantidade.Text = Row.Quantidade.ToString("N2");
+                txtLargura.Text = Row.Largura.ToString("N2");
+                txtComprimento.Text = Row.Quantidade.ToString("N2");
                 txtVlrTotal.Text = Row.PrecoTotal.ToString("N2");
+                txtArea.Text = Row.AreaTotal.ToString("N2");
+                txtQuantidade.Text = Row.Quantidade.ToString("N2");
+                txtObs.Text = Row.Observacoes;
             }
             else
             {
-                Row = new OrcamentoMaterialDTO();
+                Row = new OrcamentoMaterialDetalhadoDTO();
             }
 
             txtNome.Focus();
@@ -63,9 +67,14 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Produtos
             {
                 Row.OrcamentoId = OrcametnoId;
                 Row.ProdutoId = _produtoSelecionado.Id;
+                Row.NomeProduto = _produtoSelecionado.Nome;
                 Row.PrecoUnidade = txtVlrUnidade.ValorSemMascara;
+                Row.Largura = txtLargura.ValorSemMascara;
+                Row.Comprimento = txtComprimento.ValorSemMascara;
+                Row.AreaTotal = txtArea.ValorSemMascara;
                 Row.PrecoTotal = txtVlrTotal.ValorSemMascara;
-                Row.Quantidade = txtQuantidade.ValorSemMascara;
+                Row.Quantidade = txtComprimento.ValorSemMascara;
+                Row.Observacoes = txtObs.Text;
 
                 if (Row.Id != 0)
                 {
@@ -109,18 +118,26 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Produtos
             txtUnidade.Text = _produtoSelecionado?.Unidade ?? string.Empty;
             txtUnidadeDescricao.Text = _produtoSelecionado?.DescricaoUnidade ?? string.Empty;
             txtVlrUnidade.Text = SafeConverter.ToString(_produtoSelecionado?.PrecoUnidade ?? 0);
-            txtVlrTotal.Text = SafeConverter.ToString(CalculaTotal());
-        }
+            AtualizaTotais();
+        }       
 
-        private decimal CalculaTotal()
+        private void txtVlrUnidade_Leave(object sender, EventArgs e) => AtualizaTotais();
+        private void txtQuantidade_Leave(object sender, EventArgs e) => AtualizaTotais();
+        private void txtLargura_Leave(object sender, EventArgs e) => AtualizaTotais();
+        private void txtComprimento_Leave(object sender, EventArgs e) => AtualizaTotais();
+        private void txtUnidade_Leave(object sender, EventArgs e) => AtualizaTotais();
+
+        private void AtualizaTotais()
         {
-            var qtd = txtUnidadeDescricao.ValorSemMascara;
-            var vlr = txtVlrUnidade.ValorSemMascara;
+            var areaTotal = txtComprimento.ValorSemMascara * txtLargura.ValorSemMascara;
+            txtArea.Text = areaTotal.ToString("N2");
 
-            return qtd * vlr;
-        }
+            var vlrUnidade = txtVlrUnidade.ValorSemMascara;
+            var quantidade = txtUnidadeDescricao.ValorSemMascara;
 
-        private void txtVlrUnidade_Leave(object sender, EventArgs e) => txtVlrTotal.Text = SafeConverter.ToString(CalculaTotal());
-        private void txtQuantidade_Leave(object sender, EventArgs e) => txtVlrTotal.Text = SafeConverter.ToString(CalculaTotal());
+            // TODO: Adicionar campo no cadastro da unidade para saber se calcula área total ou não
+            var total = vlrUnidade * (txtUnidade.Text.Equals("M²") ? areaTotal : 1) * quantidade;
+            txtVlrTotal.Text = total.ToString("N2");
+        } 
     }
 }

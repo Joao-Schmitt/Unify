@@ -6,5 +6,6 @@ namespace Unify.Budgets.Application.Interfaces.Queries
     public interface IOrcamentoQueries
     {
         IEnumerable<OrcamentoDetalhadoDTO> ObterTodosDetalhado();
+        IEnumerable<OrcamentoMaterialDetalhadoDTO> ObtertMateriaisDetalhado(long orcamentoId);
     }
 }

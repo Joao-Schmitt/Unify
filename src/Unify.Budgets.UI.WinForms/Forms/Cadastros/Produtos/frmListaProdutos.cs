@@ -60,6 +60,9 @@ namespace Unify.Budgets.UI.WinForms.Forms.Cadastros.Produtos
 
             var visibleIndex = 0;
 
+            if (Selecao)
+                gridProdutos.EnableSingleCheckSelection();
+
             gridProdutos.ConfigurarColuna("Nome", "Produto", ++visibleIndex);
             gridProdutos.ConfigurarColuna("Unidade", "Unidade", ++visibleIndex, 90);
             gridProdutos.ConfigurarColuna("PrecoUnidade", "Preço", ++visibleIndex);

@@ -44,5 +44,29 @@ namespace Unify.Budgets.Application.Queries
 
             return this.SqlQuery<OrcamentoDetalhadoDTO>(query).OrderBy(x => x.Id).ToList();
         }
+
+        public IEnumerable<OrcamentoMaterialDetalhadoDTO> ObtertMateriaisDetalhado(long orcamentoId)
+        {
+			var query = $@"SELECT
+							OrcamentoMateriais.Id,
+							OrcamentoMateriais.OrcamentoId,
+							OrcamentoMateriais.ProdutoId,
+							Produtos.Nome as NomeProduto,
+							OrcamentoMateriais.Comprimento,
+							OrcamentoMateriais.Largura,
+							OrcamentoMateriais.AreaTotal,
+							OrcamentoMateriais.PrecoUnidade,
+							OrcamentoMateriais.Quantidade,
+							OrcamentoMateriais.PrecoTotal,
+							OrcamentoMateriais.Observacoes
+						FROM 
+							OrcamentoMateriais
+							LEFT JOIN Produtos ON OrcamentoMateriais.ProdutoId = Produtos.Id
+						WHERE
+							OrcamentoId = {orcamentoId}";
+
+			return this.SqlQuery<OrcamentoMaterialDetalhadoDTO>(query).OrderBy(x => x.Id).ToList();
+        }
+
     }
 }

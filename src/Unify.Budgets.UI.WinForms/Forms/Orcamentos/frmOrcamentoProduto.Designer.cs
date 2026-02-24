@@ -33,13 +33,13 @@
             this.txtUnidade = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
             this.txtUnidadeDescricao = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
             this.txtVlrUnidade = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
-            this.txtQuantidade = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
+            this.txtComprimento = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
             this.txtVlrTotal = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
             this.btnSelecaoProduto = new Unify.Budgets.UI.Controls.Controls.UnifyButton();
-            this.unifyTextBox1 = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
-            this.unifyTextBox2 = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
-            this.unifyTextBox3 = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.txtLargura = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
+            this.txtArea = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
+            this.txtQuantidade = new Unify.Budgets.UI.Controls.Controls.UnifyTextBox();
+            this.txtObs = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -59,7 +59,9 @@
             // 
             // txtNome
             // 
+            this.txtNome.BackColorInput = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.txtNome.Caption = "Nome do Produto";
+            this.txtNome.ForeColorInput = System.Drawing.SystemColors.WindowText;
             this.txtNome.Location = new System.Drawing.Point(12, 12);
             this.txtNome.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Texto;
             this.txtNome.MascaraCustomizada = "";
@@ -78,7 +80,9 @@
             // 
             // txtUnidade
             // 
+            this.txtUnidade.BackColorInput = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.txtUnidade.Caption = "Unidade";
+            this.txtUnidade.ForeColorInput = System.Drawing.SystemColors.WindowText;
             this.txtUnidade.Location = new System.Drawing.Point(12, 58);
             this.txtUnidade.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Texto;
             this.txtUnidade.MascaraCustomizada = "";
@@ -94,10 +98,13 @@
             0,
             0,
             0});
+            this.txtUnidade.Leave += new System.EventHandler(this.txtUnidade_Leave);
             // 
             // txtUnidadeDescricao
             // 
+            this.txtUnidadeDescricao.BackColorInput = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.txtUnidadeDescricao.Caption = "Descrição da Unidade";
+            this.txtUnidadeDescricao.ForeColorInput = System.Drawing.SystemColors.WindowText;
             this.txtUnidadeDescricao.Location = new System.Drawing.Point(83, 58);
             this.txtUnidadeDescricao.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Texto;
             this.txtUnidadeDescricao.MascaraCustomizada = "";
@@ -116,7 +123,9 @@
             // 
             // txtVlrUnidade
             // 
+            this.txtVlrUnidade.BackColorInput = System.Drawing.Color.White;
             this.txtVlrUnidade.Caption = "Valor da Unidade";
+            this.txtVlrUnidade.ForeColorInput = System.Drawing.SystemColors.WindowText;
             this.txtVlrUnidade.Location = new System.Drawing.Point(12, 150);
             this.txtVlrUnidade.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
             this.txtVlrUnidade.MascaraCustomizada = "";
@@ -134,29 +143,33 @@
             0});
             this.txtVlrUnidade.Leave += new System.EventHandler(this.txtVlrUnidade_Leave);
             // 
-            // txtQuantidade
+            // txtComprimento
             // 
-            this.txtQuantidade.Caption = "Comprimento";
-            this.txtQuantidade.Location = new System.Drawing.Point(12, 104);
-            this.txtQuantidade.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
-            this.txtQuantidade.MascaraCustomizada = "";
-            this.txtQuantidade.MaxLength = 32767;
-            this.txtQuantidade.Name = "txtQuantidade";
-            this.txtQuantidade.ReadOnly = false;
-            this.txtQuantidade.Size = new System.Drawing.Size(105, 40);
-            this.txtQuantidade.TabIndex = 6;
-            this.txtQuantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtQuantidade.UsarFonteCustomizada = false;
-            this.txtQuantidade.ValorSemMascara = new decimal(new int[] {
+            this.txtComprimento.BackColorInput = System.Drawing.Color.White;
+            this.txtComprimento.Caption = "Comprimento (M)";
+            this.txtComprimento.ForeColorInput = System.Drawing.SystemColors.WindowText;
+            this.txtComprimento.Location = new System.Drawing.Point(12, 104);
+            this.txtComprimento.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Decimal;
+            this.txtComprimento.MascaraCustomizada = "";
+            this.txtComprimento.MaxLength = 32767;
+            this.txtComprimento.Name = "txtComprimento";
+            this.txtComprimento.ReadOnly = false;
+            this.txtComprimento.Size = new System.Drawing.Size(105, 40);
+            this.txtComprimento.TabIndex = 6;
+            this.txtComprimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtComprimento.UsarFonteCustomizada = false;
+            this.txtComprimento.ValorSemMascara = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.txtQuantidade.Leave += new System.EventHandler(this.txtQuantidade_Leave);
+            this.txtComprimento.Leave += new System.EventHandler(this.txtComprimento_Leave);
             // 
             // txtVlrTotal
             // 
+            this.txtVlrTotal.BackColorInput = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
             this.txtVlrTotal.Caption = "Valor Total";
+            this.txtVlrTotal.ForeColorInput = System.Drawing.SystemColors.WindowText;
             this.txtVlrTotal.Location = new System.Drawing.Point(12, 196);
             this.txtVlrTotal.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
             this.txtVlrTotal.MascaraCustomizada = "";
@@ -186,74 +199,82 @@
             this.btnSelecaoProduto.UseAutomaticForeColor = true;
             this.btnSelecaoProduto.Click += new System.EventHandler(this.btnSelecaoProduto_Click);
             // 
-            // unifyTextBox1
+            // txtLargura
             // 
-            this.unifyTextBox1.Caption = "Largura";
-            this.unifyTextBox1.Location = new System.Drawing.Point(123, 104);
-            this.unifyTextBox1.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
-            this.unifyTextBox1.MascaraCustomizada = "";
-            this.unifyTextBox1.MaxLength = 32767;
-            this.unifyTextBox1.Name = "unifyTextBox1";
-            this.unifyTextBox1.ReadOnly = false;
-            this.unifyTextBox1.Size = new System.Drawing.Size(105, 40);
-            this.unifyTextBox1.TabIndex = 11;
-            this.unifyTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.unifyTextBox1.UsarFonteCustomizada = false;
-            this.unifyTextBox1.ValorSemMascara = new decimal(new int[] {
+            this.txtLargura.BackColorInput = System.Drawing.Color.White;
+            this.txtLargura.Caption = "Largura  (M)";
+            this.txtLargura.ForeColorInput = System.Drawing.SystemColors.WindowText;
+            this.txtLargura.Location = new System.Drawing.Point(123, 104);
+            this.txtLargura.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Decimal;
+            this.txtLargura.MascaraCustomizada = "";
+            this.txtLargura.MaxLength = 32767;
+            this.txtLargura.Name = "txtLargura";
+            this.txtLargura.ReadOnly = false;
+            this.txtLargura.Size = new System.Drawing.Size(105, 40);
+            this.txtLargura.TabIndex = 11;
+            this.txtLargura.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtLargura.UsarFonteCustomizada = false;
+            this.txtLargura.ValorSemMascara = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.txtLargura.Leave += new System.EventHandler(this.txtLargura_Leave);
+            // 
+            // txtArea
+            // 
+            this.txtArea.BackColorInput = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            this.txtArea.Caption = "Área Total  (M²)";
+            this.txtArea.ForeColorInput = System.Drawing.SystemColors.WindowText;
+            this.txtArea.Location = new System.Drawing.Point(234, 104);
+            this.txtArea.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Decimal;
+            this.txtArea.MascaraCustomizada = "";
+            this.txtArea.MaxLength = 32767;
+            this.txtArea.Name = "txtArea";
+            this.txtArea.ReadOnly = true;
+            this.txtArea.Size = new System.Drawing.Size(105, 40);
+            this.txtArea.TabIndex = 12;
+            this.txtArea.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtArea.UsarFonteCustomizada = false;
+            this.txtArea.ValorSemMascara = new decimal(new int[] {
             0,
             0,
             0,
             0});
             // 
-            // unifyTextBox2
+            // txtQuantidade
             // 
-            this.unifyTextBox2.Caption = "Área Total";
-            this.unifyTextBox2.Location = new System.Drawing.Point(234, 104);
-            this.unifyTextBox2.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
-            this.unifyTextBox2.MascaraCustomizada = "";
-            this.unifyTextBox2.MaxLength = 32767;
-            this.unifyTextBox2.Name = "unifyTextBox2";
-            this.unifyTextBox2.ReadOnly = true;
-            this.unifyTextBox2.Size = new System.Drawing.Size(105, 40);
-            this.unifyTextBox2.TabIndex = 12;
-            this.unifyTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.unifyTextBox2.UsarFonteCustomizada = false;
-            this.unifyTextBox2.ValorSemMascara = new decimal(new int[] {
+            this.txtQuantidade.BackColorInput = System.Drawing.Color.White;
+            this.txtQuantidade.Caption = "Quantidade";
+            this.txtQuantidade.ForeColorInput = System.Drawing.SystemColors.WindowText;
+            this.txtQuantidade.Location = new System.Drawing.Point(234, 150);
+            this.txtQuantidade.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
+            this.txtQuantidade.MascaraCustomizada = "";
+            this.txtQuantidade.MaxLength = 32767;
+            this.txtQuantidade.Name = "txtQuantidade";
+            this.txtQuantidade.ReadOnly = false;
+            this.txtQuantidade.Size = new System.Drawing.Size(105, 40);
+            this.txtQuantidade.TabIndex = 13;
+            this.txtQuantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtQuantidade.UsarFonteCustomizada = false;
+            this.txtQuantidade.ValorSemMascara = new decimal(new int[] {
             0,
             0,
             0,
             0});
+            this.txtQuantidade.Leave += new System.EventHandler(this.txtQuantidade_Leave);
             // 
-            // unifyTextBox3
+            // txtObs
             // 
-            this.unifyTextBox3.Caption = "Quantidade";
-            this.unifyTextBox3.Location = new System.Drawing.Point(234, 150);
-            this.unifyTextBox3.Mascara = Unify.Budgets.UI.Controls.Enums.TipoMascara.Moeda;
-            this.unifyTextBox3.MascaraCustomizada = "";
-            this.unifyTextBox3.MaxLength = 32767;
-            this.unifyTextBox3.Name = "unifyTextBox3";
-            this.unifyTextBox3.ReadOnly = false;
-            this.unifyTextBox3.Size = new System.Drawing.Size(105, 40);
-            this.unifyTextBox3.TabIndex = 13;
-            this.unifyTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.unifyTextBox3.UsarFonteCustomizada = false;
-            this.unifyTextBox3.ValorSemMascara = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.txtObs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBox1.Location = new System.Drawing.Point(15, 275);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(476, 141);
-            this.richTextBox1.TabIndex = 14;
-            this.richTextBox1.Text = "";
+            this.txtObs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtObs.Location = new System.Drawing.Point(15, 275);
+            this.txtObs.Name = "txtObs";
+            this.txtObs.Size = new System.Drawing.Size(476, 141);
+            this.txtObs.TabIndex = 14;
+            this.txtObs.Text = "";
             // 
             // label1
             // 
@@ -271,13 +292,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 458);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.unifyTextBox3);
-            this.Controls.Add(this.unifyTextBox2);
-            this.Controls.Add(this.unifyTextBox1);
+            this.Controls.Add(this.txtObs);
+            this.Controls.Add(this.txtQuantidade);
+            this.Controls.Add(this.txtArea);
+            this.Controls.Add(this.txtLargura);
             this.Controls.Add(this.btnSelecaoProduto);
             this.Controls.Add(this.txtVlrTotal);
-            this.Controls.Add(this.txtQuantidade);
+            this.Controls.Add(this.txtComprimento);
             this.Controls.Add(this.txtVlrUnidade);
             this.Controls.Add(this.txtUnidadeDescricao);
             this.Controls.Add(this.txtUnidade);
@@ -302,13 +323,13 @@
         private Unify.Budgets.UI.Controls.Controls.UnifyTextBox txtUnidade;
         private Unify.Budgets.UI.Controls.Controls.UnifyTextBox txtUnidadeDescricao;
         private Unify.Budgets.UI.Controls.Controls.UnifyTextBox txtVlrUnidade;
-        private UI.Controls.Controls.UnifyTextBox txtQuantidade;
+        private UI.Controls.Controls.UnifyTextBox txtComprimento;
         private UI.Controls.Controls.UnifyTextBox txtVlrTotal;
         private UI.Controls.Controls.UnifyButton btnSelecaoProduto;
-        private UI.Controls.Controls.UnifyTextBox unifyTextBox1;
-        private UI.Controls.Controls.UnifyTextBox unifyTextBox2;
-        private UI.Controls.Controls.UnifyTextBox unifyTextBox3;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private UI.Controls.Controls.UnifyTextBox txtLargura;
+        private UI.Controls.Controls.UnifyTextBox txtArea;
+        private UI.Controls.Controls.UnifyTextBox txtQuantidade;
+        private System.Windows.Forms.RichTextBox txtObs;
         private System.Windows.Forms.Label label1;
     }
 }
