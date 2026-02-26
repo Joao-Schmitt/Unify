@@ -8,8 +8,8 @@
     <ProjectGuid>{36270888-55F2-4D52-AFE7-56FF6227EE76}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unify.Budgets.Application</RootNamespace>
-    <AssemblyName>Unify.Budgets.Application</AssemblyName>
+    <RootNamespace>Unify.Application</RootNamespace>
+    <AssemblyName>Unify.Application</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

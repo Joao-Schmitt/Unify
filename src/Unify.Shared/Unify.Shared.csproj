@@ -7,8 +7,8 @@
     <ProjectGuid>{4EFC615C-737C-4A19-9E52-CD4E60239DFA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unify.Budgets.Shared</RootNamespace>
-    <AssemblyName>Unify.Budgets.Shared</AssemblyName>
+    <RootNamespace>Unify.Shared</RootNamespace>
+    <AssemblyName>Unify.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

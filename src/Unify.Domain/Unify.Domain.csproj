@@ -7,8 +7,8 @@
     <ProjectGuid>{BCAA6664-F334-44F4-8E71-4FAC31C27168}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unify.Budgets.Domain</RootNamespace>
-    <AssemblyName>Unify.Budgets.Domain</AssemblyName>
+    <RootNamespace>Unify.Domain</RootNamespace>
+    <AssemblyName>Unify.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

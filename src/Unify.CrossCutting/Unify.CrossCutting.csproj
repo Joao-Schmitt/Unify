@@ -8,8 +8,8 @@
     <ProjectGuid>{5FD1996B-F03A-4D49-BD86-5AFF6C2AC01D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unify.Budgets.CrossCutting</RootNamespace>
-    <AssemblyName>Unify.Budgets.CrossCutting</AssemblyName>
+    <RootNamespace>Unify.CrossCutting</RootNamespace>
+    <AssemblyName>Unify.CrossCutting</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
